@@ -1,0 +1,68 @@
+import requests
+
+
+
+def get_repository_info(owner, repo_name, access_token):
+    url = f"https://api.github.com/repos/{rukhamrakhshanda}/{Trending_Repositories_Prediction}"
+    headers = {"Authorization": f"token {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}"}
+
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        repository_info = response.json()
+        return repository_info
+    else:
+        print(f"Error: {response.status_code} - {response.json()['message']}")
+        return None
+
+def get_repository_commits(owner, repo_name, access_token):
+    url = f"https://api.github.com/repos/{rukhamrakhshanda}/{Trending_Repositories_Prediction}/commits"
+    headers = {"Authorization": f"token {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}"}
+
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        commits_data = response.json()
+        return commits_data
+    else:
+        print(f"Error: {response.status_code} - {response.json()['message']}")
+        return None
+
+def get_repository_issues(owner, repo_name, access_token):
+    url = f"https://api.github.com/repos/{rukhamrakhshanda}/{Trending_Repositories_Prediction}/issues"
+    headers = {"Authorization": f"token {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}"}
+
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        issues_data = response.json()
+        return issues_data
+    else:
+        print(f"Error: {response.status_code} - {response.json()['message']}")
+        return None
+
+if __name__ == "__main__":
+    owner = "your_github_username"
+    repo_name = "your_repository_name"
+    access_token = "your_github_personal_access_token"
+
+    # Get repository information
+    repository_info = get_repository_info(owner, repo_name, access_token)
+    if repository_info:
+        print("Repository Information:")
+        print(f"Name: {repository_info['name']}")
+        print(f"Description: {repository_info['description']}")
+        print(f"Stars: {repository_info['stargazers_count']}")
+        print(f"Forks: {repository_info['forks_count']}")
+        print(f"Issues: {repository_info['open_issues_count']}")
+
+    # Get repository commits
+    commits_data = get_repository_commits(owner, repo_name, access_token)
+    if commits_data:
+        print("Commits:")
+        for commit in commits_data:
+            print(f"{commit['sha']} - {commit['commit']['message']}")
+
+    # Get repository issues
+    issues_data = get_repository_issues(owner, repo_name, access_token)
+    if issues_data:
+        print("Issues:")
+        for issue in issues_data:
+            print(f"{issue['number']} - {issue['title']}")
